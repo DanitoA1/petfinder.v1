@@ -50,8 +50,8 @@ export class PetsController {
 
   @Get()
   @ApiOkResponse({ type: Pets })
-  async getPets(@Query(ValidationPipe) query: petFilterDto): Promise<Pets> {
-    return await this.petsService.getPets(query);
+  async getPets(@Query(ValidationPipe) queries: petFilterDto): Promise<Pets> {
+    return await this.petsService.getPets(queries);
   }
 
   @Get(':id')
