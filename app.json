@@ -1,0 +1,29 @@
+{
+    "name": "PetFinder",
+    "description": "PetFinder is a small test project built to replicates some of the features on petfinder.com",
+    "website": "https://github.com/DanitoA1/petfinder.v1",
+    "repository": "https://github.com/DanitoA1/petfinder.v1",
+    "logo": "/",
+    "success_url": "/",
+    "scripts":{
+      "predeploy": "npm install && npm run build"
+    },
+    "env": {
+      "NODE_ENV": {
+        "description": "Environment [production/development]",
+        "value": "production"
+      }
+    },
+    "formation": {
+      "web": {
+        "quantity": 1
+      }
+    },
+    "image": "heroku/nodejs",
+    "addons": ["heroku-postgresql"],
+    "buildpacks": [
+      {
+        "url": "heroku/nodejs"
+      }
+    ]
+  }
