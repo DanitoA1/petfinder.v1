@@ -1,0 +1,15 @@
+
+
+# Set the version of docker compose to use
+version: '3.9'
+
+# The containers that compose the project
+services:
+  db:
+    image: postgres:13
+    restart: always
+    container_name: petfinder
+    ports:
+      - '5400:5432'
+    env_file:
+      - .env
