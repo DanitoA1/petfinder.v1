@@ -6,6 +6,65 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "postgres"
   url      = env("DATABASE_URL")
+}
+
+model Pets {
+  id                Int       @id @default(autoincrement())
+  organization_id   String
+  url               String?
+  type              PetType
+  species           String
+  breeds            Json?
+  colors            Json?
+  age               PetAge
+  gender            PetGender
+  size              PetSize
+  attributes        Json?
+  tags              String[]
+  name              String
+  description       String
+  photos            Json?
+  status            PetStatus
+  status_changed_at DateTime  @default(now())
+  published_at      DateTime  @default(now())
+
+}
+
+enum PetType {
+  Dog
+  Cat
+  Rabbit
+  Small_Furry
+  Horse
+  Birds
+  Scales_Fins_Others
+  Barnyard
+}
+
+enum PetGender {
+  male
+  female
+  unknown
+}
+
+enum PetSize {
+  small
+  medium
+  large
+  xlarge
+}
+
+enum PetStatus {
+  adoptable
+  adopted
+  found
+}
+
+enum PetAge {
+  baby
+  young
+  adult
+  senior
 }
