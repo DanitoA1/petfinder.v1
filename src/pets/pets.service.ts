@@ -30,7 +30,7 @@ export class PetsService {
     const attributesFilter = [];
     const publishedAtFilter = [];
 
-    queries.breed.forEach((breed) => {
+    queries.breed?.forEach((breed) => {
       breedFilter.push({
         breeds: {
           path: ['primary'],
@@ -69,14 +69,14 @@ export class PetsService {
     if (queries.before) {
       publishedAtFilter.push({
         published_at: {
-          lt: queries.before ? new Date(queries.before) : undefined,
+          lt: new Date(queries.before),
         },
       });
     }
     if (queries.after) {
       publishedAtFilter.push({
         published_at: {
-          lt: queries.after ? new Date(queries.after) : undefined,
+          lt: new Date(queries.after),
         },
       });
     }
@@ -87,14 +87,14 @@ export class PetsService {
       .concat(publishedAtFilter);
 
     const result = await this.prisma.pets.findMany({
-      take: queries.page ? parseInt(queries.per_page) : 20,
+      take: queries.limit ? parseInt(queries.limit) : 20,
       skip:
         queries.page && queries.limit
           ? (parseInt(queries.page) - 1) * parseInt(queries.limit)
           : 0,
       where: {
         type: queries.type ? queries.type : undefined,
-        OR: multipleJsonFieldFilter,
+        // OR: multipleJsonFieldFilter,
         size: {
           in: queries.size ? queries.size : undefined,
         },
@@ -104,10 +104,12 @@ export class PetsService {
         age: {
           in: queries.age ? queries.age : undefined,
         },
-        colors: {
-          path: ['primary'],
-          equals: queries.color ? queries.color : undefined,
-        },
+        colors: queries.color
+          ? {
+              path: ['primary'],
+              equals: queries.color,
+            }
+          : undefined,
         status: {
           in: queries.status ? queries.status : undefined,
         },
@@ -118,9 +120,6 @@ export class PetsService {
           ? queries.organization
           : undefined,
         attributes: {},
-        published_at: {
-          lt: queries.before ? new Date(queries.before) : undefined,
-        },
       },
     });
     const pets = [];
