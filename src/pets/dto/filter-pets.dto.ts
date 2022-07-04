@@ -63,7 +63,10 @@ export class petFilterDto {
   })
   status?: string[];
 
-  @ApiPropertyOptional({ description: 'Return results matching animal name' })
+  @ApiPropertyOptional({
+    description:
+      'Return results matching animal name (includes partial matches; e.g. "Fred" will return "Alfredo" and "Frederick")',
+  })
   name?: string;
 
   @ApiPropertyOptional({
