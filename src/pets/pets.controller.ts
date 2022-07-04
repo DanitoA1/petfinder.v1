@@ -38,34 +38,34 @@ import { petFilterDto } from './dto/filter-pets.dto';
 @DecorateAll(
   ApiInternalServerErrorResponse({ description: 'Internal Server Error' }),
 )
-@Controller('pets')
+@Controller()
 export class PetsController {
   constructor(private readonly petsService: PetsService) {}
 
-  @Post()
+  @Post('pet')
   @ApiOkResponse({ type: Pet })
   create(@Body(ValidationPipe) createPetDto: CreatePetDto) {
     return this.petsService.create(createPetDto);
   }
 
-  @Get()
+  @Get('pets')
   @ApiOkResponse({ type: Pets })
   async getPets(@Query(ValidationPipe) queries: petFilterDto): Promise<Pets> {
     return await this.petsService.getPets(queries);
   }
 
-  @Get(':id')
+  @Get('pet/:id')
   @ApiOkResponse({ type: Pet })
   async findOne(@Param('id') id: string): Promise<Pet> {
     return await this.petsService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch('pet/:id')
   update(@Param('id') id: string, @Body() updatePetDto: UpdatePetDto) {
     return this.petsService.update(+id, updatePetDto);
   }
 
-  @Delete(':id')
+  @Delete('pet/:id')
   remove(@Param('id') id: string) {
     return this.petsService.remove(+id);
   }
