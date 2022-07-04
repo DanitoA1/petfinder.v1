@@ -23,23 +23,31 @@ export class petFilterDto {
   })
   type?: PetType;
 
-  @ApiPropertyOptional({ description: 'Return results matching animal breed' })
+  @ApiPropertyOptional({
+    description:
+      'Return results matching animal breed (Accepts multiple values)',
+    format: 'Primary breed Search',
+  })
   breed?: string[];
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    description:
+      'Return results matching animal size (Accepts multiple values)',
+  })
   size?: string[];
 
   @ApiPropertyOptional({
     enum: PetGender,
     isArray: true,
-    description: 'Return results matching animal gender',
+    description:
+      'Return results matching animal gender (Accepts multiple values)',
   })
   gender?: string[];
 
   @ApiPropertyOptional({
     enum: PetAge,
     isArray: true,
-    description: 'Return results matching animal age',
+    description: 'Return results matching animal age (Accepts multiple values)',
   })
   age?: string[];
 
@@ -50,7 +58,8 @@ export class petFilterDto {
     enum: PetStatus,
     isArray: true,
     default: 'adoptable',
-    description: 'Return results matching adoption status',
+    description:
+      'Return results matching adoption status (Accepts multiple values)',
   })
   status?: string[];
 
@@ -59,6 +68,7 @@ export class petFilterDto {
 
   @ApiPropertyOptional({
     description: 'Return results associated with specific organization(s)',
+    format: 'organization_id',
   })
   organization?: string;
 
@@ -103,13 +113,16 @@ export class petFilterDto {
     default: 1,
     minimum: 1,
     description: 'Specifies which page of results to return',
+    format: 'minimum value: 1',
   })
   page?: number;
 
   @ApiPropertyOptional({
     default: 20,
     maximum: 100,
+    minimum: 1,
     description: 'Maximum number of results to return per page response',
+    format: 'minimum value: 1, maximum value: 100',
   })
   limit?: number;
 }
